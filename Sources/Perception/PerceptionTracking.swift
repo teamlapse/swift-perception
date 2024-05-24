@@ -114,7 +114,7 @@ public struct PerceptionTracking: Sendable {
     let tracking = PerceptionTracking(list)
     _installTracking(
       tracking,
-      willSet: { _ in
+      didSet: { _ in
         onChange()
         tracking.cancel()
       })

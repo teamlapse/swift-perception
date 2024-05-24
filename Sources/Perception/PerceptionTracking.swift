@@ -236,6 +236,7 @@ public func withPerceptionTracking<T>(
 @available(tvOS, deprecated: 17, renamed: "withObservationTracking")
 @available(visionOS, deprecated: 9999, renamed: "withObservationTracking")
 @available(watchOS, deprecated: 10, renamed: "withObservationTracking")
+@_spi(SwiftUI)
 public func withPerceptionTracking<T>(
   _ apply: () -> T,
   willSet: @escaping @Sendable (PerceptionTracking) -> Void,
@@ -259,6 +260,7 @@ public func withPerceptionTracking<T>(
 @available(tvOS, deprecated: 17, renamed: "withObservationTracking")
 @available(visionOS, deprecated: 9999, renamed: "withObservationTracking")
 @available(watchOS, deprecated: 10, renamed: "withObservationTracking")
+@_spi(SwiftUI)
 public func withPerceptionTracking<T>(
   _ apply: () -> T,
   willSet: @escaping @Sendable (PerceptionTracking) -> Void
@@ -280,6 +282,7 @@ public func withPerceptionTracking<T>(
 @available(tvOS, deprecated: 17, renamed: "withObservationTracking")
 @available(visionOS, deprecated: 9999, renamed: "withObservationTracking")
 @available(watchOS, deprecated: 10, renamed: "withObservationTracking")
+@_spi(SwiftUI)
 public func withPerceptionTracking<T>(
   _ apply: () -> T,
   didSet: @escaping @Sendable (PerceptionTracking) -> Void

@@ -218,83 +218,9 @@ public func withPerceptionTracking<T>(
   _ apply: () -> T,
   onChange: @autoclosure () -> @Sendable () -> Void
 ) -> T {
-  #if canImport(Observation)
-    if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
-      return withObservationTracking(apply, onChange: onChange())
-    }
-  #endif
-
   let (result, accessList) = generateAccessList(apply)
   if let accessList {
     PerceptionTracking._installTracking(accessList, onChange: onChange())
-  }
-  return result
-}
-
-@available(iOS, deprecated: 17, renamed: "withObservationTracking")
-@available(macOS, deprecated: 14, renamed: "withObservationTracking")
-@available(tvOS, deprecated: 17, renamed: "withObservationTracking")
-@available(visionOS, deprecated: 9999, renamed: "withObservationTracking")
-@available(watchOS, deprecated: 10, renamed: "withObservationTracking")
-@_spi(SwiftUI)
-public func withPerceptionTracking<T>(
-  _ apply: () -> T,
-  willSet: @escaping @Sendable (PerceptionTracking) -> Void,
-  didSet: @escaping @Sendable (PerceptionTracking) -> Void
-) -> T {
-  #if canImport(Observation)
-    if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
-      return withObservationTracking(apply, willSet: willSet, didSet: didSet)
-    }
-  #endif
-
-  let (result, accessList) = generateAccessList(apply)
-  if let accessList {
-    PerceptionTracking._installTracking(PerceptionTracking(accessList), willSet: willSet, didSet: didSet)
-  }
-  return result
-}
-
-@available(iOS, deprecated: 17, renamed: "withObservationTracking")
-@available(macOS, deprecated: 14, renamed: "withObservationTracking")
-@available(tvOS, deprecated: 17, renamed: "withObservationTracking")
-@available(visionOS, deprecated: 9999, renamed: "withObservationTracking")
-@available(watchOS, deprecated: 10, renamed: "withObservationTracking")
-@_spi(SwiftUI)
-public func withPerceptionTracking<T>(
-  _ apply: () -> T,
-  willSet: @escaping @Sendable (PerceptionTracking) -> Void
-) -> T {
-  #if canImport(Observation)
-    if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
-      return withObservationTracking(apply, willSet: willSet)
-    }
-  #endif
-  let (result, accessList) = generateAccessList(apply)
-  if let accessList {
-    PerceptionTracking._installTracking(PerceptionTracking(accessList), willSet: willSet, didSet: nil)
-  }
-  return result
-}
-
-@available(iOS, deprecated: 17, renamed: "withObservationTracking")
-@available(macOS, deprecated: 14, renamed: "withObservationTracking")
-@available(tvOS, deprecated: 17, renamed: "withObservationTracking")
-@available(visionOS, deprecated: 9999, renamed: "withObservationTracking")
-@available(watchOS, deprecated: 10, renamed: "withObservationTracking")
-@_spi(SwiftUI)
-public func withPerceptionTracking<T>(
-  _ apply: () -> T,
-  didSet: @escaping @Sendable (PerceptionTracking) -> Void
-) -> T {
-  #if canImport(Observation)
-    if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
-      return withObservationTracking(apply, didSet: didSet)
-    }
-  #endif
-  let (result, accessList) = generateAccessList(apply)
-  if let accessList {
-    PerceptionTracking._installTracking(PerceptionTracking(accessList), willSet: nil, didSet: didSet)
   }
   return result
 }

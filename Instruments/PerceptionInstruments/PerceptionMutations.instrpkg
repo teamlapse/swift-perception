@@ -11,7 +11,7 @@
         <title>Perception Mutation Schema</title>
 
         <subsystem>"com.lapse.perception"</subsystem>
-        <category>"PerceptionMutation"</category>
+        <category>"PerceptionTracked"</category>
         <name>"Mutation"</name>
 
         <pattern>
@@ -76,6 +76,7 @@
             <title>Intervals</title>
             <table-ref>perception-mutation-table</table-ref>
 
+            <column>timestamp</column>
             <column>model-name</column>
             <column>property-name</column>
             <column>old-value</column>

@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8DF17C4C2D4FD09E00FF2E0B"
-               BuildableName = "ComponentBuilderBuilding.instrdst"
-               BlueprintName = "ComponentBuilderBuilding"
+               BuildableName = "PerceptionInstruments.instrdst"
+               BlueprintName = "PerceptionInstruments"
                ReferencedContainer = "container:PerceptionInstrumentation.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,6 +42,7 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
+         BundleIdentifier = "com.apple.dt.Instruments"
          FilePath = "/Applications/Xcode_16.2.app/Contents/Applications/Instruments.app">
       </PathRunnable>
    </LaunchAction>
@@ -55,8 +56,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8DF17C4C2D4FD09E00FF2E0B"
-            BuildableName = "ComponentBuilderBuilding.instrdst"
-            BlueprintName = "ComponentBuilderBuilding"
+            BuildableName = "PerceptionInstruments.instrdst"
+            BlueprintName = "PerceptionInstruments"
             ReferencedContainer = "container:PerceptionInstrumentation.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

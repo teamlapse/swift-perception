@@ -39,6 +39,7 @@
             }
             set {
               withMutation(keyPath: \.count) {
+                PerceptionSignpost.logMutation(self, identifier: "count", oldValue: _count, newValue: newValue)
                 _count = newValue
               }
             }

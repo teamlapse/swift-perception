@@ -63,9 +63,32 @@ public struct PerceptionRegistrar: Sendable {
     }
 
     public func withMutation<Subject: Observable, Member, T>(
-      of subject: Subject, keyPath: KeyPath<Subject, Member>, _ mutation: () throws -> T
+        of subject: Subject,
+        keyPath: KeyPath<Subject, Member>,
+        identifier: String,
+        _ mutation: () throws -> T
     ) rethrows -> T {
-      try self.registrar.withMutation(of: subject, keyPath: keyPath, mutation)
+        if PerceptionSignpost.enabled {
+            let signpostId = OSSignpostID(log: PerceptionSignpost.perception)
+            let modelName = String(describing: type(of: subject))
+            let oldValue = String(describing: subject[keyPath: keyPath])
+            let value = try mutation()
+            let newValue = String(describing:  value)
+            os_signpost(
+                .event,
+                log: PerceptionSignpost.perception,
+                name: "Mutation",
+                signpostID: signpostId,
+                "Model:%{public}@,Property:%{public}@,OldValue:%{public}@,NewValue:%{public}@",
+                modelName,
+                identifier,
+                oldValue,
+                newValue
+            )
+            return self.registrar.withMutation(of: subject, keyPath: keyPath, { value })
+        }
+
+        return try self.registrar.withMutation(of: subject, keyPath: keyPath, mutation)
     }
 
     public func willSet<Subject: Observable, Member>(
@@ -114,6 +137,7 @@ extension PerceptionRegistrar {
   public func withMutation<Subject: Perceptible, Member, T>(
     of subject: Subject,
     keyPath: KeyPath<Subject, Member>,
+    identifier: String,
     _ mutation: () throws -> T
   ) rethrows -> T {
     #if canImport(Observation)
@@ -121,6 +145,34 @@ extension PerceptionRegistrar {
         let subject = subject as? any Observable
       {
         func `open`<S: Observable>(_ subject: S) throws -> T {
+            let kp = unsafeDowncast(keyPath, to: KeyPath<S, Member>.self)
+
+            if PerceptionSignpost.enabled {
+                let signpostId = OSSignpostID(log: PerceptionSignpost.perception)
+                let modelName = String(describing: type(of: subject))
+                let oldValue = String(describing: subject[keyPath: kp])
+                let value = try mutation()
+                let newValue = String(describing:  value)
+                os_signpost(
+                    .event,
+                    log: PerceptionSignpost.perception,
+                    name: "Mutation",
+                    signpostID: signpostId,
+                    "Model:%{public}@,Property:%{public}@,OldValue:%{public}@,NewValue:%{public}@",
+                    modelName,
+                    identifier,
+                    oldValue,
+                    newValue
+                )
+
+                return try self.registrar.withMutation(
+                  of: subject,
+                  keyPath: unsafeDowncast(keyPath, to: KeyPath<S, Member>.self),
+                  mutation
+                )
+            }
+
+
           return try self.registrar.withMutation(
             of: subject,
             keyPath: unsafeDowncast(keyPath, to: KeyPath<S, Member>.self),
@@ -129,7 +181,26 @@ extension PerceptionRegistrar {
         }
         return try open(subject)
       } else {
-        return try self.perceptionRegistrar.withMutation(of: subject, keyPath: keyPath, mutation)
+          if PerceptionSignpost.enabled {
+              let signpostId = OSSignpostID(log: PerceptionSignpost.perception)
+              let modelName = String(describing: type(of: subject))
+              let oldValue = String(describing: subject[keyPath: keyPath])
+              let value = try mutation()
+              let newValue = String(describing:  value)
+              os_signpost(
+                .event,
+                log: PerceptionSignpost.perception,
+                name: "Mutation",
+                signpostID: signpostId,
+                "Model:%{public}@,Property:%{public}@,OldValue:%{public}@,NewValue:%{public}@",
+                modelName,
+                identifier,
+                oldValue,
+                newValue
+              )
+              return self.perceptionRegistrar.withMutation(of: subject, keyPath: keyPath, { value })
+          }
+          return try self.perceptionRegistrar.withMutation(of: subject, keyPath: keyPath, mutation)
       }
     #else
       return try mutation()
@@ -389,3 +460,10 @@ extension PerceptionRegistrar: Hashable {
     }
   }
 #endif
+
+import OSLog
+
+public enum PerceptionSignpost {
+    public static var enabled = false
+    static let perception = OSLog(subsystem: "com.lapse.perception", category: "PerceptionTracked")
+}

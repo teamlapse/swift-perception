@@ -465,5 +465,5 @@ import OSLog
 
 public enum PerceptionSignpost {
     public static var enabled = false
-    static let perception = OSLog(subsystem: "com.lapse.perception", category: "PerceptionTracked")
+    static let perception = OSLog(subsystem: "com.lapse.perception", category: "PerceptionMutation")
 }

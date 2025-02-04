@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<package>
+    <id>com.lapse.PerceptionInstrumentation</id>
+    <title>Perception Instrumentation</title>
+    <owner>
+        <name>Alex Little</name>
+    </owner>
+
+    <os-signpost-point-schema>
+        <id>perception-mutation-schema</id>
+        <title>Perception Mutation Schema</title>
+
+        <subsystem>"com.lapse.Perception"</subsystem>
+        <category>"Perception"</category>
+        <name>"PerceptionMutation"</name>
+
+        <pattern>
+            <message>"Model:" ?model-name ",Property:" ?property-name ",OldValue:" ?old-value ",NewValue:" ?new-value</message>
+        </pattern>
+
+        <column>
+            <mnemonic>model-name</mnemonic>
+            <title>Model Name</title>
+            <type>string</type>
+            <expression>?model-name</expression>
+        </column>
+
+        <column>
+            <mnemonic>property-name</mnemonic>
+            <title>Property Name</title>
+            <type>string</type>
+            <expression>?property-name</expression>
+        </column>
+
+        <column>
+            <mnemonic>old-value</mnemonic>
+            <title>Current Value</title>
+            <type>string</type>
+            <expression>?old-value</expression>
+        </column>
+
+        <column>
+            <mnemonic>new-value</mnemonic>
+            <title>Updated Value</title>
+            <type>string</type>
+            <expression>?new-value</expression>
+        </column>
+    </os-signpost-point-schema>
+
+    <instrument>
+        <id>com.lapse.PerceptionInstrumentation.PerceptionMutationInstrument</id>
+        <title>Perception Mutations</title>
+        <category>Behavior</category>
+        <purpose>Instrument for tracking mutations to observable models</purpose>
+        <icon>Generic</icon>
+
+        <create-table>
+            <id>perception-mutation-table</id>
+            <schema-ref>perception-mutation-schema</schema-ref>
+        </create-table>
+
+        <graph>
+            <title>Perception Properties</title>
+            <lane>
+                <title>Updates</title>
+                <table-ref>perception-mutation-table</table-ref>
+
+                <histogram>
+                    <nanoseconds-per-bucket>100000000</nanoseconds-per-bucket>
+                    <count/>
+                </histogram>
+            </lane>
+        </graph>
+
+        <list>
+            <title>Intervals</title>
+            <table-ref>perception-mutation-table</table-ref>
+
+            <column>model-name</column>
+            <column>property-name</column>
+            <column>old-value</column>
+            <column>new-value</column>
+        </list>
+
+    </instrument>
+
+</package>
+

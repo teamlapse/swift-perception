@@ -30,6 +30,8 @@ final class PerceptionTrackingTests: XCTestCase {
   }
 }
 
+import OSLog
+
 @Perceptible
 private class Model {
   var count1 = 0

@@ -10,9 +10,9 @@
         <id>perception-mutation-schema</id>
         <title>Perception Mutation Schema</title>
 
-        <subsystem>"com.lapse.Perception"</subsystem>
-        <category>"Perception"</category>
-        <name>"PerceptionMutation"</name>
+        <subsystem>"com.lapse.perception"</subsystem>
+        <category>"PerceptionMutation"</category>
+        <name>"Mutation"</name>
 
         <pattern>
             <message>"Model:" ?model-name ",Property:" ?property-name ",OldValue:" ?old-value ",NewValue:" ?new-value</message>

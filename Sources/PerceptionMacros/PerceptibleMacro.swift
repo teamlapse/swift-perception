@@ -62,10 +62,9 @@ public struct PerceptibleMacro {
       """
       internal nonisolated func withMutation<Member, MutationResult>(
       keyPath: KeyPath<\(perceptibleType), Member>,
-      identifier: String,
       _ mutation: () throws -> MutationResult
       ) rethrows -> MutationResult {
-      try \(raw: registrarVariableName).withMutation(of: self, keyPath: keyPath, identifier: identifier, mutation)
+      try \(raw: registrarVariableName).withMutation(of: self, keyPath: keyPath, mutation)
       }
       """
   }
@@ -362,7 +361,8 @@ public struct PerceptionTrackedMacro: AccessorMacro {
     let setAccessor: AccessorDeclSyntax =
       """
       set {
-      withMutation(keyPath: \\.\(identifier), identifier: "\(identifier)") {
+      withMutation(keyPath: \\.\(identifier)) {
+      PerceptionSignpost.logMutation(self, identifier: "\(identifier)", oldValue: _\(identifier), newValue: newValue)
       _\(identifier) = newValue
       }
       }

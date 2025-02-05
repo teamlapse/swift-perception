@@ -13,7 +13,7 @@
     (if (eq ?instance__ FALSE) then (bind ?instance__ (create-modeler-instance)) (modify ?mod-inst-fact__ (instance ?instance__)) else (set-modeler-instance-to ?instance__))
     (assert (modeler-instance-binding (instance ?instance__) (rule 1)))
     (bind-output-table ?t0__)
-    (bind-input-table os-signpost (attribute target-pid $?target-pid) (attribute category PerceptionTracked) (attribute subsystem "com.lapse.perception"))
+    (bind-input-table os-signpost (attribute target-pid $?target-pid) (attribute subsystem "com.lapse.perception") (attribute category PerceptionTracked))
     (assert (modeler-instance-param (instance ?instance__) (name target-pid) (value ?target-pid)))
 )
 (defrule bootstrap-rule-1

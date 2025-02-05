@@ -42,7 +42,6 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
-         BundleIdentifier = "com.apple.dt.Instruments"
          FilePath = "/Applications/Xcode_16.2.app/Contents/Applications/Instruments.app">
       </PathRunnable>
    </LaunchAction>

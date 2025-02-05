@@ -66,7 +66,7 @@
                 <table-ref>perception-mutation-table</table-ref>
 
                 <histogram>
-                    <nanoseconds-per-bucket>100000000</nanoseconds-per-bucket>
+                    <nanoseconds-per-bucket>10000000</nanoseconds-per-bucket>
                     <count/>
                 </histogram>
             </lane>

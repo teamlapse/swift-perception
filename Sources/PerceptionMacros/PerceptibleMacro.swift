@@ -64,6 +64,9 @@ public struct PerceptibleMacro {
       keyPath: KeyPath<\(perceptibleType), Member>,
       _ mutation: () throws -> MutationResult
       ) rethrows -> MutationResult {
+      let typeName = String(describing: type(of: self))
+      let keyPathDescription = String(describing: keyPath)
+      print("Perceptible withMutation: \\(typeName).\\(keyPathDescription)")
       try \(raw: registrarVariableName).withMutation(of: self, keyPath: keyPath, mutation)
       }
       """
